@@ -22,12 +22,12 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 public class JanelaGramatica extends JFrame {
-	
+
 	private static final long serialVersionUID = -8790035762434592998L;
-	
+
 	private Gramatica gramatica;
 
-	private JTextField textFieldVariavel;	
+	private JTextField textFieldVariavel;
 	private JList<Character> listVariaveis;
 	private static JList<Character> listTerminais;
 	private JList<String> listProducoes;
@@ -61,12 +61,12 @@ public class JanelaGramatica extends JFrame {
 	private JLabel lblAdicionarTerminais;
 	private JLabel lblAdicionarVariavel;
 	private JLabel lblAdicionarProducoes;
-	
+
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
-			
+
 		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -86,32 +86,30 @@ public class JanelaGramatica extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		lblAdicionarVariavel = new JLabel("Adicionar Variavel");
 		lblAdicionarVariavel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblAdicionarVariavel.setBounds(197, 17, 129, 14);
 		contentPane.add(lblAdicionarVariavel);
-		
+
 		lblAdicionarProducoes = new JLabel("Adicionar Produ\u00E7\u00F5es");
 		lblAdicionarProducoes.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblAdicionarProducoes.setBounds(518, 13, 159, 22);
 		contentPane.add(lblAdicionarProducoes);
-		
+
 		textFieldVariavel = new JTextField();
 		textFieldVariavel.setBounds(253, 42, 86, 20);
 		contentPane.add(textFieldVariavel);
 		textFieldVariavel.setColumns(10);
-		
+
 		lblVariavel = new JLabel("Vari\u00E1vel:");
 		lblVariavel.setBounds(197, 45, 46, 14);
 		contentPane.add(lblVariavel);
-		
+
 		lblVariaveis = new JLabel("Variáveis:");
 		lblVariaveis.setBounds(293, 112, 60, 14);
 		contentPane.add(lblVariaveis);
-		
 
-		
 		listVariaveis = new JList<Character>();
 		listVariaveis.setValueIsAdjusting(true);
 		listVariaveis.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -119,16 +117,16 @@ public class JanelaGramatica extends JFrame {
 		JScrollPane scrollPanel = new JScrollPane(listVariaveis);
 		scrollPanel.setBounds(197, 129, 142, 121);
 		contentPane.add(scrollPanel);
-		
+
 		btnAdicionarVariavel = new JButton("Adicionar Vari\u00E1vel");
 		btnAdicionarVariavel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {					
-					if(textFieldVariavel.getText() == null || textFieldVariavel.getText().trim().isEmpty()) {
+				try {
+					if (textFieldVariavel.getText() == null || textFieldVariavel.getText().trim().isEmpty()) {
 						JOptionPane.showMessageDialog(JanelaGramatica.this, "Coloque uma letra maiuscula!");
 						return;
 					}
-					
+
 					Character variavel = textFieldVariavel.getText().trim().charAt(0);
 					if (gramatica == null) {
 						gramatica = new Gramatica(variavel);
@@ -139,64 +137,65 @@ public class JanelaGramatica extends JFrame {
 					} else {
 						gramatica.adicionarVariavel(variavel);
 					}
-					
-					// Inserindo na lista(interface) para a inser��o das produ��es.
+
+					// Inserindo na lista(interface) para a inser��o das
+					// produ��es.
 					listVariaveis.setListData(criarListaVariaveis());
-					
-					
-					// Inserindo na lista(interface) para a inser��o das produ��es.
+
+					// Inserindo na lista(interface) para a inser��o das
+					// produ��es.
 					listTerminais.setListData(criarListaTerminais());
 					atualizarLabels();
-			} catch(GramaticaException e) {
-				JOptionPane.showMessageDialog(JanelaGramatica.this, e.getMessage());
-			}
-				
+				} catch (GramaticaException e) {
+					JOptionPane.showMessageDialog(JanelaGramatica.this, e.getMessage());
+				}
+
 			}
 		});
 		btnAdicionarVariavel.setBounds(197, 70, 142, 23);
 		contentPane.add(btnAdicionarVariavel);
-		
+
 		lblGramatica = new JLabel("G = (V, T, P, S)");
 		lblGramatica.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblGramatica.setBounds(698, 14, 122, 20);
 		contentPane.add(lblGramatica);
-		
+
 		lblAdicionarTerminais = new JLabel("Adicionar Terminais");
 		lblAdicionarTerminais.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblAdicionarTerminais.setBounds(12, 13, 159, 22);
 		contentPane.add(lblAdicionarTerminais);
-		
+
 		lblTerminal = new JLabel("Terminal:");
 		lblTerminal.setBounds(11, 45, 46, 14);
 		contentPane.add(lblTerminal);
-		
+
 		txtFieldTerminal = new JTextField();
 		txtFieldTerminal.setEnabled(false);
 		txtFieldTerminal.setColumns(10);
 		txtFieldTerminal.setBounds(67, 42, 86, 20);
 		contentPane.add(txtFieldTerminal);
-		
+
 		btnAdicionarTerminal = new JButton("Adicionar Terminal");
 		btnAdicionarTerminal.setEnabled(false);
 		btnAdicionarTerminal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					String terminal = txtFieldTerminal.getText().trim();
-					if(terminal == null || terminal.trim().isEmpty()) {
+					if (terminal == null || terminal.trim().isEmpty()) {
 						JOptionPane.showMessageDialog(JanelaGramatica.this, "Insira um caractere maiusculo");
 						return;
 					}
 					gramatica.adicionarTerminais(terminal.charAt(0));
 					listTerminais.setListData(criarListaTerminais());
 					atualizarLabels();
-				} catch(GramaticaException e) {
+				} catch (GramaticaException e) {
 					JOptionPane.showMessageDialog(JanelaGramatica.this, e.getMessage());
 				}
 			}
 		});
 		btnAdicionarTerminal.setBounds(12, 70, 141, 23);
 		contentPane.add(btnAdicionarTerminal);
-		
+
 		listTerminais = new JList<Character>();
 		listTerminais.setValueIsAdjusting(true);
 		listTerminais.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -204,11 +203,11 @@ public class JanelaGramatica extends JFrame {
 		scrollPanel = new JScrollPane(listTerminais);
 		scrollPanel.setBounds(12, 129, 141, 121);
 		contentPane.add(scrollPanel);
-		
+
 		lblTerminais = new JLabel("Terminais:");
 		lblTerminais.setBounds(104, 112, 64, 14);
 		contentPane.add(lblTerminais);
-		
+
 		listProducoes = new JList<String>();
 		listProducoes.setValueIsAdjusting(true);
 		listProducoes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -216,72 +215,72 @@ public class JanelaGramatica extends JFrame {
 		scrollPanel = new JScrollPane(listProducoes);
 		scrollPanel.setBounds(518, 129, 141, 121);
 		contentPane.add(scrollPanel);
-		
+
 		lblProducoes = new JLabel("Produções:");
 		lblProducoes.setBounds(604, 111, 72, 14);
 		contentPane.add(lblProducoes);
-		
+
 		btnAdicionarProducoes = new JButton("Adicionar Produção");
 		btnAdicionarProducoes.setEnabled(false);
 		btnAdicionarProducoes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Character variavel = listVariaveis.getSelectedValue();
-					if(variavel == null) {
+					if (variavel == null) {
 						JOptionPane.showMessageDialog(JanelaGramatica.this, "Selecione uma variável.");
 						return;
 					}
 					String producao = textFieldProducao.getText().trim();
 					gramatica.adicionarProducao(variavel, producao);
-					
+
 					listProducoes.setListData(criarListaProducoes());
 					atualizarLabels();
-				} catch(GramaticaException ex) {
+				} catch (GramaticaException ex) {
 					JOptionPane.showMessageDialog(JanelaGramatica.this, ex.getMessage());
 				}
 			}
 		});
 		btnAdicionarProducoes.setBounds(518, 70, 141, 23);
-		contentPane.add(btnAdicionarProducoes);		
-		
+		contentPane.add(btnAdicionarProducoes);
+
 		textFieldProducao = new JTextField();
 		textFieldProducao.setEnabled(false);
 		textFieldProducao.setColumns(10);
 		textFieldProducao.setBounds(573, 42, 86, 20);
 		contentPane.add(textFieldProducao);
-		
+
 		lblProducao = new JLabel("Produção:");
 		lblProducao.setBounds(518, 45, 54, 14);
 		contentPane.add(lblProducao);
-		
+
 		label = new JLabel(" << Selecione uma variável aqui");
 		label.setBounds(349, 137, 159, 14);
 		contentPane.add(label);
-		
+
 		lblParaCriarUma = new JLabel("Para criar uma produção aqui >>");
 		lblParaCriarUma.setBounds(349, 162, 159, 14);
 		contentPane.add(lblParaCriarUma);
-		
+
 		labelGramatica = new JTextArea("Gramática:");
 		scrollPanel = new JScrollPane(labelGramatica);
 		scrollPanel.setBounds(670, 84, 320, 198);
 		contentPane.add(scrollPanel);
-		
+
 		labelGramaticaMinimizada = new JTextArea("Gramática Minimizada:");
 		scrollPanel = new JScrollPane(labelGramaticaMinimizada);
 		scrollPanel.setBounds(12, 295, 320, 198);
 		contentPane.add(scrollPanel);
-		
+
 		lblFnc = new JTextArea("FNC:");
 		scrollPanel = new JScrollPane(lblFnc);
 		scrollPanel.setBounds(340, 295, 320, 198);
 		contentPane.add(scrollPanel);
-		
+
 		lblFng = new JTextArea("FNG:");
 		scrollPanel = new JScrollPane(lblFng);
 		scrollPanel.setBounds(670, 295, 320, 198);
 		contentPane.add(scrollPanel);
-		
+
 		btnGerarExemplo = new JButton("Gerar Exemplo");
 		btnGerarExemplo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -290,7 +289,7 @@ public class JanelaGramatica extends JFrame {
 		});
 		btnGerarExemplo.setBounds(695, 50, 142, 23);
 		contentPane.add(btnGerarExemplo);
-		
+
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -299,107 +298,109 @@ public class JanelaGramatica extends JFrame {
 		});
 		btnLimpar.setBounds(847, 50, 142, 23);
 		contentPane.add(btnLimpar);
-		
+
 		lblEmBrancoPara = new JLabel("Em branco para Ø >>");
 		lblEmBrancoPara.setBounds(398, 45, 110, 14);
 		contentPane.add(lblEmBrancoPara);
-		
+
 		label_1 = new JLabel(" << Começe por aqui");
 		label_1.setForeground(Color.RED);
 		label_1.setFont(new Font("Tahoma", Font.BOLD, 12));
 		label_1.setBounds(349, 73, 159, 14);
 		contentPane.add(label_1);
-		
+
 		btnRemoverTerminal = new JButton("Remover Terminal");
 		btnRemoverTerminal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					Character terminal = listTerminais.getSelectedValue();
-					if(terminal == null) {
+					if (terminal == null) {
 						return;
 					}
 					gramatica.removerTerminal(terminal);
 					listTerminais.setListData(criarListaTerminais());
 					listProducoes.setListData(criarListaProducoes());
 					atualizarLabels();
-				} catch(GramaticaException e) {
+				} catch (GramaticaException e) {
 					JOptionPane.showMessageDialog(JanelaGramatica.this, e.getMessage());
 				}
 			}
 		});
 		btnRemoverTerminal.setBounds(12, 259, 141, 23);
 		contentPane.add(btnRemoverTerminal);
-		
+
 		btnRemoverVariavel = new JButton("Remover Variável");
 		btnRemoverVariavel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Character variavel = listVariaveis.getSelectedValue();
-					if(variavel == null) {
+					if (variavel == null) {
 						return;
 					}
 					gramatica.removerVariavel(variavel);
 					listVariaveis.setListData(criarListaVariaveis());
 					listProducoes.setListData(criarListaProducoes());
 					atualizarLabels();
-				} catch(GramaticaException ex) {
+				} catch (GramaticaException ex) {
 					JOptionPane.showMessageDialog(JanelaGramatica.this, ex.getMessage());
 				}
 			}
 		});
 		btnRemoverVariavel.setBounds(197, 259, 142, 23);
 		contentPane.add(btnRemoverVariavel);
-		
+
 		btnRemoverProducao = new JButton("Remover Produção");
 		btnRemoverProducao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					String prod = listProducoes.getSelectedValue();
-					if(prod == null) {
+					if (prod == null) {
 						return;
 					}
 					gramatica.removerProducao(prod.charAt(0), prod.substring(prod.indexOf(" -> ") + " -> ".length()));
 					listProducoes.setListData(criarListaProducoes());
 					atualizarLabels();
-				} catch(GramaticaException ex) {
+				} catch (GramaticaException ex) {
 					JOptionPane.showMessageDialog(JanelaGramatica.this, ex.getMessage());
 				}
 			}
 		});
 		btnRemoverProducao.setBounds(518, 258, 141, 23);
 		contentPane.add(btnRemoverProducao);
-		
+
 		btnInstrucoes = new JButton("Instruções");
 		btnInstrucoes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(JanelaGramatica.this, "Use apenas 1 letra maiúscula para variáveis e 1 letra minúscula para terminais."
-						+ "\nComeçe adicionando uma variável ou abrindo o exemplo."
-						+ "\nA primeira variável sempre será a inicial."
-						+ "\nSelecione uma variável para adicionar uma produção à ela."
-						+ "\nUse nas produções apenas variáveis ou terminais previamente adicionados."
-						+ "\nA aplicação se limita a 26 variáveis (letras do alfabeto).", "Instruções", 1);
+				JOptionPane.showMessageDialog(JanelaGramatica.this,
+						"Use apenas 1 letra maiúscula para variáveis e 1 letra minúscula para terminais."
+								+ "\nComeçe adicionando uma variável ou abrindo o exemplo."
+								+ "\nA primeira variável sempre será a inicial."
+								+ "\nSelecione uma variável para adicionar uma produção à ela."
+								+ "\nUse nas produções apenas variáveis ou terminais previamente adicionados."
+								+ "\nA aplicação se limita a 26 variáveis (letras do alfabeto).",
+						"Instruções", 1);
 			}
 		});
 		btnInstrucoes.setBounds(847, 15, 142, 23);
 		contentPane.add(btnInstrucoes);
 	}
-	
+
 	private Character[] criarListaVariaveis() {
 		List<Character> l = new ArrayList<Character>();
-		for(Variavel v : gramatica.variaveis) {
+		for (Variavel v : gramatica.variaveis) {
 			l.add(v.getNome());
 		}
 		return l.toArray(new Character[l.size()]);
 	}
-	
+
 	private Character[] criarListaTerminais() {
 		return gramatica.terminais.toArray(new Character[gramatica.terminais.size()]);
 	}
-	
+
 	private String[] criarListaProducoes() {
 		List<String> prod = new ArrayList<String>();
-		for(Variavel v : gramatica.variaveis) {
-			for(String s : v.getProducoes()) {
+		for (Variavel v : gramatica.variaveis) {
+			for (String s : v.getProducoes()) {
 				String aux = s;
 				if (s.equals("")) {
 					aux = "Ø";
@@ -409,7 +410,7 @@ public class JanelaGramatica extends JFrame {
 		}
 		return prod.toArray(new String[prod.size()]);
 	}
-	
+
 	private void gerarExemplo() {
 		gramatica = new Gramatica('S');
 		gramatica.adicionarVariavel('B');
@@ -424,7 +425,7 @@ public class JanelaGramatica extends JFrame {
 		gramatica.adicionarProducao('C', "BDB");
 		gramatica.adicionarProducao('D', "d");
 		gramatica.adicionarProducao('D', "");
-		
+
 		txtFieldTerminal.setEnabled(true);
 		btnAdicionarTerminal.setEnabled(true);
 		textFieldProducao.setEnabled(true);
@@ -432,12 +433,12 @@ public class JanelaGramatica extends JFrame {
 		listTerminais.setListData(criarListaTerminais());
 		listVariaveis.setListData(criarListaVariaveis());
 		listProducoes.setListData(criarListaProducoes());
-		atualizarLabels();		
+		atualizarLabels();
 	}
-	
+
 	private void limpar() {
 		gramatica = null;
-		
+
 		txtFieldTerminal.setEnabled(false);
 		btnAdicionarTerminal.setEnabled(false);
 		textFieldProducao.setEnabled(false);
@@ -448,27 +449,27 @@ public class JanelaGramatica extends JFrame {
 		txtFieldTerminal.setText("");
 		textFieldProducao.setText("");
 		textFieldVariavel.setText("");
-		
-		atualizarLabels();		
+
+		atualizarLabels();
 	}
 
 	private void atualizarLabels() {
 		labelGramatica.setText(gramatica == null ? "Gramática:" : "Gramática:\n" + gramatica);
-		
+
 		try {
-			labelGramaticaMinimizada.setText("Gramática minimizada:\n" + MinimizadorGramatica.minimizar(gramatica));
+			labelGramaticaMinimizada.setText("Gramática minimizada:\n" + new GramaticaMinimizada(gramatica));
 		} catch (Exception e) {
 			labelGramaticaMinimizada.setText("Gramática minimizada:");
 		}
-		
+
 		try {
-			lblFnc.setText("FNC:\n" + FNCGramatica.fnc(gramatica));
+			lblFnc.setText("FNC:\n" + new GramaticaFNC(gramatica));
 		} catch (Exception e) {
 			lblFnc.setText("FNC:");
 		}
-		
+
 		try {
-			lblFng.setText("FNG:\n" + FNGGramatica.fng(gramatica));
+			lblFng.setText("FNG:\n" + new GramaticaFNG(gramatica));
 		} catch (Exception e) {
 			lblFng.setText("FNG:");
 		}

@@ -5,11 +5,11 @@ import java.util.List;
 
 public class Gramatica {
 	
-	List<Variavel> variaveis;
+	protected List<Variavel> variaveis;
 	
-	List<Character> terminais;
+	protected List<Character> terminais;
 	
-	Variavel inicial;
+	protected Variavel inicial;
 	
 	public Gramatica(Character variavelInicial) {
 		variaveis = new ArrayList<>();
@@ -18,10 +18,7 @@ public class Gramatica {
 		variaveis.add(inicial);
 	}
 	
-	/**
-	 * Construtor usado apenas para clonar a gramática.
-	 */
-	private Gramatica() {
+	protected Gramatica() {
 		
 	}
 

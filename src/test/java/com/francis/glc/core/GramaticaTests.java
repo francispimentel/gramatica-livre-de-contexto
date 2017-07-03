@@ -1,7 +1,12 @@
-package com.francis.glc;
+package com.francis.glc.core;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import com.francis.glc.core.Gramatica;
+import com.francis.glc.core.GramaticaFNC;
+import com.francis.glc.core.GramaticaFNG;
+import com.francis.glc.core.GramaticaMinimizada;
 
 public class GramaticaTests {
 

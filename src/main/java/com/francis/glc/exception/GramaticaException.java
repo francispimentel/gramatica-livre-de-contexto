@@ -1,4 +1,4 @@
-package com.francis.glc;
+package com.francis.glc.exception;
 
 /**
  * Usada apenas para mostrar mensagens user friendly na tela

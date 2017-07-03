@@ -1,4 +1,4 @@
-package com.francis.glc;
+package com.francis.glc.ui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -20,6 +20,13 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+
+import com.francis.glc.core.Gramatica;
+import com.francis.glc.core.GramaticaFNC;
+import com.francis.glc.core.GramaticaFNG;
+import com.francis.glc.core.GramaticaMinimizada;
+import com.francis.glc.core.Variavel;
+import com.francis.glc.exception.GramaticaException;
 
 public class JanelaGramatica extends JFrame {
 
@@ -387,19 +394,19 @@ public class JanelaGramatica extends JFrame {
 
 	private Character[] criarListaVariaveis() {
 		List<Character> l = new ArrayList<Character>();
-		for (Variavel v : gramatica.variaveis) {
+		for (Variavel v : gramatica.getVariaveis()) {
 			l.add(v.getNome());
 		}
 		return l.toArray(new Character[l.size()]);
 	}
 
 	private Character[] criarListaTerminais() {
-		return gramatica.terminais.toArray(new Character[gramatica.terminais.size()]);
+		return gramatica.getTerminais().toArray(new Character[gramatica.getTerminais().size()]);
 	}
 
 	private String[] criarListaProducoes() {
 		List<String> prod = new ArrayList<String>();
-		for (Variavel v : gramatica.variaveis) {
+		for (Variavel v : gramatica.getVariaveis()) {
 			for (String s : v.getProducoes()) {
 				String aux = s;
 				if (s.equals("")) {

@@ -1,4 +1,4 @@
-package com.francis.glc;
+package com.francis.glc.core;
 
 import java.util.ArrayList;
 import java.util.List;

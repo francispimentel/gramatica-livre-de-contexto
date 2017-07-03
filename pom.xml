@@ -23,7 +23,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.francis.glc.JanelaGramatica</mainClass>
+							<mainClass>com.francis.glc.ui.JanelaGramatica</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

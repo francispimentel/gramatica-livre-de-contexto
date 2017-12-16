@@ -15,8 +15,7 @@ public class GramaticaMinimizada extends Gramatica {
 		this.inicial = g.inicial;
 		removerProducoesVazias();
 		removerProducoesUnitarias();
-		while (removerVariaveisInuteis())
-			;
+		while (removerVariaveisInuteis());
 	}
 
 	private void removerProducoesVazias() {
